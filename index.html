@@ -27,8 +27,8 @@
   };
 
   // Initialize Firebase
-  const firebaseApp = initializeApp(firebaseConfig);
-  const database = getDatabase(firebaseApp);
+  import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
   // Rest of the code
 
