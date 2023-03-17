@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Attendance</title>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
 
 
 </head>
@@ -25,8 +24,8 @@ const { getDatabase, ref, set, onValue } = firebase.default.database;
       appId: "1:637780022846:web:bde9318d301f84fbc6636f"
     };
 
-    const firebaseApp = initializeApp(firebaseConfig);
-    const database = getDatabase(firebaseApp);
+     firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
     const events = [
       { name: "U16 Spring Jam Sioux Falls", date: "April 22-23" },
