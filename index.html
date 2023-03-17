@@ -39,7 +39,8 @@ const { getDatabase, ref, set, onValue } = firebase.default.database;
     ];
 
     function updateAttendance(eventIndex, attendeeIndex, attending) {
-      const eventRef = ref(database, `events/${eventIndex}/${attendeeIndex}`);
+      const eventRef = firebase.database().ref(`events/${eventIndex}/${attendeeIndex}`);
+
       set(eventRef, attending);
     }
 
@@ -61,7 +62,8 @@ const { getDatabase, ref, set, onValue } = firebase.default.database;
             updateAttendance(eventIndex, attendeeIndex, attendingCheckbox.checked);
           });
 
-          const eventRef = ref(database, `events/${eventIndex}/${attendeeIndex}`);
+         const eventRef = firebase.database().ref(`events/${eventIndex}/${attendeeIndex}`);
+
           onValue(eventRef, (snapshot) => {
             attendingCheckbox.checked = snapshot.val() || false;
           });
