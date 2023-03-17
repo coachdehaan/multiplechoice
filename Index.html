@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Attendance</title>
+  <style>
+    .selected {
+      background-color: lightgreen;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div id="events"></div>
+
+  <script>
+    // ...
+    function updateAttendance(eventIndex, attendeeIndex, choice) {
+      const eventRef = database.ref(`events/${eventIndex}/${attendeeIndex}`);
+      eventRef.set(choice);
+    }
+
+    function renderEvents() {
+      const eventsDiv = document.getElementById('events');
+      eventsDiv.innerHTML = '';
+
+      events.forEach((event, eventIndex) => {
+        const eventDiv = document.createElement('div');
+        eventDiv.innerHTML = `<h2>${event.name} (${event.date})</h2>`;
+        const attendeeList = document.createElement('ul');
+
+        attendees.forEach((attendee, attendeeIndex) => {
+          const attendeeItem = document.createElement('li');
+          attendeeItem.textContent = attendee;
+
+          const attendingRadioButton = document.createElement('input');
+          attendingRadioButton.type = 'radio';
+          attendingRadioButton.name = `attendance-${eventIndex}-${attendeeIndex}`;
+          attendingRadioButton.value = 'attending';
+          attendingRadioButton.dataset.attendeeIndex = attendeeIndex;
+
+          const notAttendingRadioButton = document.createElement('input');
+          notAttendingRadioButton.type = 'radio';
+          notAttendingRadioButton.name = `attendance-${eventIndex}-${attendeeIndex}`;
+          notAttendingRadioButton.value = 'not-attending';
+          notAttendingRadioButton.dataset.attendeeIndex = attendeeIndex;
+
+          [attendingRadioButton, notAttendingRadioButton].forEach((radioButton) => {
+            radioButton.addEventListener('change', () => {
+              if (radioButton.checked) {
+                updateAttendance(eventIndex, attendeeIndex, radioButton.value);
+              }
+            });
+          });
+
+          const eventRef = database.ref(`events/${eventIndex}/${attendeeIndex}`);
+          eventRef.on('value', (snapshot) => {
+            const attendance = snapshot.val();
+            attendingRadioButton.checked = attendance === 'attending';
+            notAttendingRadioButton.checked = attendance === 'not-attending';
+
+            if (attendance === 'attending') {
+              attendeeItem.classList.add('selected');
+            } else {
+              attendeeItem.classList.remove('selected');
+            }
+          });
+
+          attendeeItem.appendChild(attendingRadioButton);
+          attendeeItem.appendChild(document.createTextNode('Attending '));
+          attendeeItem.appendChild(notAttendingRadioButton);
+          attendeeItem.appendChild(document.createTextNode('Not Attending'));
+          attendeeList.appendChild(attendeeItem);
+        });
+
+        eventDiv.appendChild(attendeeList);
+        eventsDiv.appendChild(eventDiv);
+      });
+    }
+
+    renderEvents();
+  </script>
+</body>
+</html>
