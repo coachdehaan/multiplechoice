@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Attendance</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
 </head>
 <body>
   <div id="events"></div>
   <script>
-    const { initializeApp } = firebase.default;
-    const { getDatabase, ref, set, onValue } = firebase.database;
+    const { initializeApp } = firebase;
+const { getDatabase, ref, set, onValue } = firebase.database;
 
     const firebaseConfig = {
       apiKey: "AIzaSyB1s6fqjwKIVckOU224x2OPkVWqwonF-l0",
