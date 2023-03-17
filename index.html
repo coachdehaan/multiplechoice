@@ -24,7 +24,9 @@
 };
 
     // Initialize Firebase
-    const firebaseApp = initializeApp(firebaseConfig);
+    
+const app = initializeApp(firebaseConfig);
+
     const database = getDatabase(firebaseApp);
     const events = [
       { name: "U16 Spring Jam Sioux Falls", date: "April 22-23" },
