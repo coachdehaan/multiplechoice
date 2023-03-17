@@ -64,7 +64,8 @@ const { getDatabase, ref, set, onValue } = firebase.default.database;
 
          const eventRef = firebase.database().ref(`events/${eventIndex}/${attendeeIndex}`);
 
-          onValue(eventRef, (snapshot) => {
+         eventRef.on('value', (snapshot) => {
+
             attendingCheckbox.checked = snapshot.val() || false;
           });
 
